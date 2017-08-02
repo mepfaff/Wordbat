@@ -1,0 +1,179 @@
+<html>
+<head>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+<style id="webmakerstyle">
+.richTxtBtns{
+  margin: 10px;
+}
+
+.richTextBox {
+  height: 500px;
+  width: 400px;
+  background: lightgray;
+}
+
+.fa-caret-up, .fa-caret-down {
+  font-size: 10; 
+}
+
+.sm-font {
+  font-size: 11;
+}
+
+
+</style>
+</head>
+<body>
+<head>
+  
+</head>
+<body>
+      <main>
+      <section class="richTxtBtns"> 
+        <button id='bold' class="cmdBtn"><i class="fa fa-bold" aria-hidden="true"></i></button>
+        <button id='italic' class="cmdBtn"><i class="fa fa-italic" aria-hidden="true"></i></button>
+        <button id='underline' class="cmdBtn"><i class="fa fa-underline" aria-hidden="true"></i></button>
+        <button id='strikeThrough' class="cmdBtn"><i class="fa fa-strikethrough" aria-hidden="true"></i></button>
+        <button id='justifyLeft' class="cmdBtn"><i class="fa fa-align-left" aria-hidden="true"></i></button>
+        <button id='justifyCenter' class="cmdBtn"><i class="fa fa-align-center" aria-hidden="true"></i></button> 
+        <button id='justifyRight' class="cmdBtn"><i class="fa fa-align-right" aria-hidden="true"></i></button>
+        <button id='indent' class="cmdBtn"><i class="fa fa-indent" aria-hidden="true"></i></button>
+        <button id='outdent' class="cmdBtn"><i class="fa fa-dedent" aria-hidden="true"></i></button>
+        <button id='undo' class="cmdBtn"><i class="fa fa-undo" aria-hidden="true"></i></button>
+        <button id='redo' class="cmdBtn"><i class="fa fa-repeat" aria-hidden="true"></i></button>
+        <button id='insertUnorderedList' class="cmdBtn"><i class="fa fa-list-ul" aria-hidden="true"></i></button>
+        <button id='insertOrderedList' class="cmdBtn"><i class="fa fa-list-ol" aria-hidden="true"></i></button>
+        <button id='H1' class="headerBtn"><i class="fa fa-header"> 1</i></button>
+        <button id='H2' class="headerBtn"><i class="fa fa-header"> 2</i></button>
+        <button id='H3' class="headerBtn"><i class="fa fa-header"> 3</i></button>
+        <button id='createLink' class="cmdBtn"><i class="fa fa-link" aria-hidden="true"></i></button>
+        <button id='unlink' class="cmdBtn"><i class="fa fa-unlink" aria-hidden="true"></i></button>
+
+        <select class="select-font">
+          <option style="font-family:'Times New Roman'" value="Times New Roman">Times New Roman</option>
+          <option style="font-family:'Arial'" value="Arial">Arial</option>
+          <option style="font-family:'Courier New'" value="Courier New">Courier New</option>
+          <option style="font-family:'Georgia'" value="Georgia">Georgia</option>
+        </select>
+        <select>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+        <button id='lg-font' class="cmdBtn"><i class="fa fa-font lg-font" aria-hidden="true"></i><i class="fa fa-caret-up" aria-hidden="true"></i></button>
+        <button id='sm-font' class="cmdBtn"><i class="fa fa-font sm-font" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+
+
+      </section>
+        <section>
+        <iframe class="richTextBox" name="richTextField"></iframe>
+          </section>
+    </main>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="chrome-extension://lkfkkhfhhdkiemehlpkgjeojomhpccnh/lib/screenlog.js"></script><script>
+var fontsize;
+// document ready
+$(function(){ 
+  
+  // set iframe default font size
+ $('iframe').contents().find('body').css("font-size", "19px");
+    
+  // turn on editing
+	enableEditMode();
+  
+  // check for local storage
+  if (typeof(Storage) != "undefined") {
+    // Code for localStorage/sessionStorage.
+
+    // TODO check if logged in
+    if (true) {
+      // display logged in view 
+      
+    }
+    else {
+      // TODO: display logged out view
+    }
+  }
+  else {
+      // TODO: "Sorry, no web storage support..."
+  }
+   
+});
+
+// executes the command that's in the id of the button
+$(".cmdBtn").click(function(){
+  execCmd($(this).attr('id'));
+}); 
+
+// executes the header buttons
+$(".headerBtn").click(function(){
+  execCmdWithArg("formatBlock", $(this).attr('id'));
+}); 
+
+// executes a change of font
+$(".select-font").click(function(){
+  execCmdWithArg("fontName", this.value);
+});
+
+// increase font size
+$("#lg-font").click(function(){
+  var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) + 2;
+  $('iframe').contents().find('body').css("font-size", newFontSize + "px");
+});
+
+// decrease font size
+$("#sm-font").click(function(){
+  var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) - 2;
+  $('iframe').contents().find('body').css("font-size", newFontSize + "px");
+});
+
+
+// turns on the text editor
+function enableEditMode() {
+     richTextField.document.designMode = 'On';
+   }
+
+// does the rich parts of "rich text"
+function execCmd(command){
+  richTextField.document.execCommand(command, false, null);
+  console.log("Command: "+command);
+}
+   
+function execCmdWithArg(command, arg){
+  richTextField.document.execCommand(command, false, arg);
+  console.log("Command: "+command);
+}
+      
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+
+ 
+
+//# sourceURL=userscript.js
+</script>
+</body>
+</html>
