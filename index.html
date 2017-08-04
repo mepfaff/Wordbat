@@ -1,4 +1,3 @@
-
 <html>
 <head>
 
@@ -54,24 +53,24 @@ main {
       <div class="col-xs-12 col-sm-8 col-md-7">
         <main>
         <section class="richTxtBtns"> 
-          <button id='bold' class="cmdBtn"><i class="fa fa-bold" aria-hidden="true"></i></button>
-          <button id='italic' class="cmdBtn"><i class="fa fa-italic" aria-hidden="true"></i></button>
-          <button id='underline' class="cmdBtn"><i class="fa fa-underline" aria-hidden="true"></i></button>
-          <button id='strikeThrough' class="cmdBtn"><i class="fa fa-strikethrough" aria-hidden="true"></i></button>
-          <button id='justifyLeft' class="cmdBtn"><i class="fa fa-align-left" aria-hidden="true"></i></button>
-          <button id='justifyCenter' class="cmdBtn"><i class="fa fa-align-center" aria-hidden="true"></i></button> 
-          <button id='justifyRight' class="cmdBtn"><i class="fa fa-align-right" aria-hidden="true"></i></button>
-          <button id='indent' class="cmdBtn"><i class="fa fa-indent" aria-hidden="true"></i></button>
-          <button id='outdent' class="cmdBtn"><i class="fa fa-dedent" aria-hidden="true"></i></button>
-          <button id='undo' class="cmdBtn"><i class="fa fa-undo" aria-hidden="true"></i></button>
-          <button id='redo' class="cmdBtn"><i class="fa fa-repeat" aria-hidden="true"></i></button>
-          <button id='insertUnorderedList' class="cmdBtn"><i class="fa fa-list-ul" aria-hidden="true"></i></button>
-          <button id='insertOrderedList' class="cmdBtn"><i class="fa fa-list-ol" aria-hidden="true"></i></button>
-          <button id='H1' class="headerBtn"><i class="fa fa-header"> 1</i></button>
-          <button id='H2' class="headerBtn"><i class="fa fa-header"> 2</i></button>
-          <button id='H3' class="headerBtn"><i class="fa fa-header"> 3</i></button>
-          <button id='createLink' class="cmdBtn"><i class="fa fa-link" aria-hidden="true"></i></button>
-          <button id='unlink' class="cmdBtn"><i class="fa fa-unlink" aria-hidden="true"></i></button>
+          <button id='bold' class="btn cmdBtn"><i class="fa fa-bold" aria-hidden="true"></i></button>
+          <button id='italic' class="btn cmdBtn"><i class="fa fa-italic" aria-hidden="true"></i></button>
+          <button id='underline' class="btn cmdBtn"><i class="fa fa-underline" aria-hidden="true"></i></button>
+          <button id='strikeThrough' class="btn cmdBtn"><i class="fa fa-strikethrough" aria-hidden="true"></i></button>
+          <button id='justifyLeft' class="btn cmdBtn"><i class="fa fa-align-left" aria-hidden="true"></i></button>
+          <button id='justifyCenter' class="btn cmdBtn"><i class="fa fa-align-center" aria-hidden="true"></i></button> 
+          <button id='justifyRight' class="btn cmdBtn"><i class="fa fa-align-right" aria-hidden="true"></i></button>
+          <button id='indent' class="btn cmdBtn"><i class="fa fa-indent" aria-hidden="true"></i></button>
+          <button id='outdent' class="btn cmdBtn"><i class="fa fa-dedent" aria-hidden="true"></i></button>
+          <button id='undo' class="btn cmdBtn"><i class="fa fa-undo" aria-hidden="true"></i></button>
+          <button id='redo' class="btn cmdBtn"><i class="fa fa-repeat" aria-hidden="true"></i></button>
+          <button id='insertUnorderedList' class="btn cmdBtn"><i class="fa fa-list-ul" aria-hidden="true"></i></button>
+          <button id='insertOrderedList' class="btn cmdBtn"><i class="fa fa-list-ol" aria-hidden="true"></i></button>
+          <button id='H1' class="btn headerBtn"><i class="fa fa-header"> 1</i></button>
+          <button id='H2' class="btn headerBtn"><i class="fa fa-header"> 2</i></button>
+          <button id='H3' class="btn headerBtn"><i class="fa fa-header"> 3</i></button>
+          <button id='createLink' class="btn cmdBtn"><i class="fa fa-link" aria-hidden="true"></i></button>
+          <button id='unlink' class="btn cmdBtn"><i class="fa fa-unlink" aria-hidden="true"></i></button>
 
           <select class="select-font">
             <option style="font-family:'Times New Roman'" value="Times New Roman">Times New Roman</option>
@@ -87,12 +86,17 @@ main {
             <option value="5">5</option>
             <option value="6">6</option>
           </select>
-          <button id='lg-font' class="cmdBtn"><i class="fa fa-font lg-font" aria-hidden="true"></i><i class="fa fa-caret-up" aria-hidden="true"></i></button>
-          <button id='sm-font' class="cmdBtn"><i class="fa fa-font sm-font" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></button>
+          <button id='lg-font' class="btn cmdBtn"><i class="fa fa-font lg-font" aria-hidden="true"></i><i class="fa fa-caret-up" aria-hidden="true"></i></button>
+          <button id='sm-font' class="btn cmdBtn"><i class="fa fa-font sm-font" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></button>
 
 
         </section>
-          <section>
+          <div>
+            <button class="btn btn-danger testBtn">
+              Test
+            </button>
+          </div>
+          <section class="textGoesHere">
             <iframe class="richTextBox" name="richTextField"></iframe>
           </section>
       </main>
@@ -115,8 +119,15 @@ var fontsize;
 // document ready
 $(function(){ 
   
+
+  
+  // initialize iframe content
+  var contents = "bloop";
+  $('iframe').contents().find('body').html(contents);
+  
   // set iframe default font size
  $('iframe').contents().find('body').css("font-size", "19px");
+  
     
   // turn on editing
 	enableEditMode();
@@ -138,11 +149,14 @@ $(function(){
       // TODO: "Sorry, no web storage support..."
   }
    
-});
+
+
+}); // end document ready
 
 // executes the command that's in the id of the button
 $(".cmdBtn").click(function(){
   execCmd($(this).attr('id'));
+  console.log("command button");
 }); 
 
 // executes the header buttons
@@ -165,6 +179,15 @@ $("#lg-font").click(function(){
 $("#sm-font").click(function(){
   var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) - 2;
   $('iframe').contents().find('body').css("font-size", newFontSize + "px");
+
+});
+
+$(".testBtn").click(function(){
+  
+  var htmlTxt = $("iframe").contents().find("html").html();
+  var txt = $("iframe").contents().find("html")[0].innerText.trim();
+  console.log("html: " + htmlTxt);
+  console.log("txt: " + txt);
 });
 
 
@@ -183,28 +206,6 @@ function execCmdWithArg(command, arg){
   richTextField.document.execCommand(command, false, arg);
   console.log("Command: "+command);
 }
-      
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-
- 
-
 //# sourceURL=userscript.js
 </script>
 </body>
