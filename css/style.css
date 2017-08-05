@@ -1,0 +1,39 @@
+.formatBtn {
+  color: #303030;
+  height: 30px;
+}
+
+.btn-group {
+  margin-bottom: 5px;
+}
+
+main {
+  border: 5px solid blue;
+  height: 100%;
+}
+.sidebar {
+  border: 5px solid red;
+  height: 100%;
+}
+.soc-bar {
+  border: 5px solid purple;
+  height: 100%;
+}
+
+.richTxtBtns {
+  margin: 10px;
+}
+
+.richTextBox {
+  height: 100%;
+  width: 100%;
+  background: #f8f1fc;
+}
+
+.fa-caret-up, .fa-caret-down {
+  font-size: 10;
+}
+
+.sm-font {
+  font-size: 11;
+}

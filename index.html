@@ -1,316 +1,63 @@
-<html>
+<!DOCTYPE html>
+<html >
 <head>
+  <meta charset="UTF-8">
+  <title>WIP Wordbat</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+<link rel='stylesheet prefetch' href='https://cdn.quilljs.com/1.3.0/quill.snow.css'>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-<style id="webmakerstyle">
-.formatBtn{
-  color: #303030;
-  height: 30px;
-}
+      <link rel="stylesheet" href="css/style.css">
 
-.btn-group{
-  margin-bottom: 5px;
-}
-
-main {
-  border: 5px solid blue;
-  height: 100%;
-}
-.sidebar {
-  border: 5px solid red;
-  height: 100%;
-}
-.soc-bar {
-  border: 5px solid purple;
-  height: 100%;
-}
-
-.richTxtBtns{
-  margin: 10px;
-}
-
-.richTextBox {
-  height: 100%;
-  width: 100%;
-  background: #f8f1fc;
-}
-
-.fa-caret-up, .fa-caret-down {
-  font-size: 10; 
-}
-
-.sm-font {
-  font-size: 11;
-}
-
-
-</style>
-</head>
-<body>
-<head>
   
 </head>
+
+<body>
+  <head>
+</head>
+
 <body>
   <div class="container-fluid">
     <div class="row">
       <div class="hidden-sm hidden-xs col-md-2">
         <aside class="soc-bar">
-          woot
+          aside
         </aside>
       </div>
       <div class="col-xs-12 col-sm-8 col-md-7">
         <main>
-          
-          <!-- textbox buttons toolbar -->
-          <div class="richTxtBtns btn-toolbar" role="toolbar"> 
-          
-            <!-- bold, italic, etc. button group -->
-            <div class="btn-group">
-              <button id='bold' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-bold" aria-hidden="true"></i></button>
-              <button id='italic' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-italic" aria-hidden="true"></i></button>
-              <button id='underline' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-underline" aria-hidden="true"></i></button>
-              <button id='strikeThrough' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-strikethrough" aria-hidden="true"></i></button>
-            </div>
-
-            <!-- justify button group -->
-            <div class="btn-group">
-              <button id='justifyLeft' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-align-left" aria-hidden="true"></i></button>
-              <button id='justifyCenter' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-align-center" aria-hidden="true"></i></button> 
-              <button id='justifyRight' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-align-right" aria-hidden="true"></i></button>
-            </div>
-
-            <!-- indent button group -->
-            <div class="btn-group">
-              <button id='indent' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-indent" aria-hidden="true"></i></button>
-              <button id='outdent' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-dedent" aria-hidden="true"></i></button>
-            </div>
-
-            <!-- undo/redo button group -->
-            <div class="btn-group">
-              <button id='undo' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-undo" aria-hidden="true"></i></button>
-              <button id='redo' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-repeat" aria-hidden="true"></i></button>
-            </div>
-
-            <!-- lists button group -->
-            <div class="btn-group">
-              <button id='insertUnorderedList' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-list-ul" aria-hidden="true"></i></button>
-              <button id='insertOrderedList' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-list-ol" aria-hidden="true"></i></button>
-            </div>
-
-            <!-- font size button group -->
-            <div class="btn-group">
-              <button id='lg-font' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-font lg-font" aria-hidden="true"></i><i class="fa fa-caret-up" aria-hidden="true"></i></button>
-              <button id='sm-font' class="btn btn-default formatBtn cmdBtn"><i class="fa fa-font sm-font" aria-hidden="true"></i><i class="fa fa-caret-down" aria-hidden="true"></i></button>
-              
-              <!-- font size dropdown -->
-              <div class="btn-group">
-                <div class="dropdown">
-                  <button class="btn btn-default formatBtn dropdown-toggle" id="fontSizeDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Font Size &nbsp
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" aria-label="fontSizeDropdown">
-                    <li><a href="#" id="font-size-1">1</a></li>
-                    <li><a href="#" id="font-size-2">2</a></li>
-                    <li><a href="#" id="font-size-3">3</a></li>
-                    <li><a href="#" id="font-size-4">4</a></li>
-                    <li><a href="#" id="font-size-5">5</a></li>
-                    <li><a href="#" id="font-size-6">6</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- headers button group -->
-            <div class="btn-group">
-              <button id='H1' class="btn btn-default formatBtn headerBtn"><i class="fa fa-header"> 1</i></button>
-              <button id='H2' class="btn btn-default formatBtn headerBtn"><i class="fa fa-header"> 2</i></button>
-              <button id='H3' class="btn btn-default formatBtn headerBtn"><i class="fa fa-header"> 3</i></button>
-            </div>
-
-            <!-- select font -->
-            <div class="dropdown">
-              <button class="btn btn-default formatBtn dropdown-toggle" id="fontFaceDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                Times New Roman &nbsp
-                    <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-label="fontSizeDropdown">
-                    <li><a href="#" id="font-Times" style="font-family:'Times New Roman'">Times New Roman</a></li>
-                    <li><a href="#" id="font-Arial" style="font-family:'Arial'">Arial</a></li>
-                    <li><a href="#" id="font-Courier" style="font-family:'Courier New'">Courier New</a></li>
-                    <li><a href="#" id="font-Georgia" style="font-family:'Georgia'">Georgia</a></li>
-                  </ul>
-            </div>
-            
-            <!-- old font
-            <select class="select-font">
-              <option style="font-family:'Times New Roman'" value="Times New Roman">Times New Roman</option>
-              <option style="font-family:'Arial'" value="Arial">Arial</option>
-              <option style="font-family:'Courier New'" value="Courier New">Courier New</option>
-              <option style="font-family:'Georgia'" value="Georgia">Georgia</option>
-            </select> 
-            -->
 
 
-
-        </div>
-          
           <!-- test button TODO: remove -->
           <div>
-            <button class="btn btn-danger testBtn">
+            <button class="btn btn-danger testBtn" style="margin: 5px;">
               Test
             </button>
           </div>
           <section class="textGoesHere">
-            <iframe class="richTextBox" name="richTextField"></iframe>
+            <div id="editor">
+              
+            </div>
           </section>
-      </main>
+        </main>
       </div>
       <div class="hidden-xs col-sm-4 col-md-3">
         <section>
-          <div class="sidebar">   
-          hello
+          <div class="sidebar">
+            sidebar
           </div>
         </section>
       </div>
     </div>
   </div>
 </body>
+  <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+<script src='https://cdn.quilljs.com/1.3.0/quill.js'></script>
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="chrome-extension://lkfkkhfhhdkiemehlpkgjeojomhpccnh/lib/screenlog.js"></script><script>
-var fontsize;
-var txt; 
+    <script src="js/index.js"></script>
 
-// document ready
-$(function(){ 
-  
-
-  
-  // initialize iframe content
-  var contents = "Your text here...";
-  $('iframe').contents().find('body').html(contents);
-  
-  // set iframe default font size
- $('iframe').contents().find('body').css("font-size", "19px");
-  
-    
-  // turn on editing
-	enableEditMode();
-  
-  // check for local storage
-  if (typeof(Storage) != "undefined") {
-    // Code for localStorage/sessionStorage.
-
-    // TODO check if logged in
-    if (true) {
-      // display logged in view 
-      
-    }
-    else {
-      // TODO: display logged out view
-    }
-  }
-  else {
-      // TODO: "Sorry, no web storage support..."
-  }
-   
-  // executes the command that's in the id of the button
-  $(".cmdBtn").click(function(){
-    execCmd($(this).attr('id'));
-    console.log("command button");
-  }); 
-
-  // executes the header buttons
-  $(".headerBtn").click(function(){
-    execCmdWithArg("formatBlock", $(this).attr('id'));
-  }); 
-
-  // executes a change of font
-  $(".select-font").click(function(){
-    execCmdWithArg("fontName", this.value);
-  });
-
-  // increase font size
-  $("#lg-font").click(function(){
-    var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) + 2;
-    $('iframe').contents().find('body').css("font-size", newFontSize + "px");
-  });
-
-  // decrease font size
-  $("#sm-font").click(function(){
-    var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) - 2;
-    $('iframe').contents().find('body').css("font-size", newFontSize + "px");
-
-  });
-
-
-}); // end document ready
-
-// turns on the text editor
-function enableEditMode() {
-     richTextField.document.designMode = 'On';
-   }
-
-// does the rich parts of "rich text"
-function execCmd(command){
-  richTextField.document.execCommand(command, false, null);
-  console.log("Command: "+command);
-}
-   
-function execCmdWithArg(command, arg){
-  richTextField.document.execCommand(command, false, arg);
-  console.log("Command: "+command);
-}
-
-// a function to check for repeated words in a sorted array of strings
-function beginRepeatCheck(){
-  var len = txt.length;
-  for (var i = 0; i < len; i++){
-    
-    
-    // keep count of the ith word in txt
-    var count = 0;
-    var current = i;
-    
-    // check ith word against the next word
-    count = check(current, count);
-    if (count > 1)
-      console.log(txt[i]+": " + count);
-    
-    // move up to next unique word
-    i += (count - 1);
-
-  }
-  return;
-}
-
-// returns number of duplicate strings in a sorted array
-function check(c, count){
-  if (txt[c] === txt[c+1])
-    count = check(c+1, count);
-  count++;
-  return count;  
-}
-
-
-// test button
-$(".testBtn").click(function(){
-  
-  var htmlTxt = $("iframe").contents().find("html").html();
-  var innerTxt = $("iframe").contents().find("html")[0].innerText;
-
-  
-  txt = innerTxt.toLowerCase().replace(/[^a-z'\s\d]/g, " ").replace(/\s+/g, " ").trim().split(" ");
-  
-  console.log(txt.sort());
-  beginRepeatCheck();
-  
-  
-});
-//# sourceURL=userscript.js
-</script>
 </body>
 </html>
