@@ -33,7 +33,7 @@ main {
 .richTextBox {
   height: 100%;
   width: 100%;
-  background: lightgray;
+  background: #f8f1fc;
 }
 
 .fa-caret-up, .fa-caret-down {
@@ -182,13 +182,15 @@ main {
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="chrome-extension://lkfkkhfhhdkiemehlpkgjeojomhpccnh/lib/screenlog.js"></script><script>
 var fontsize;
+var txt; 
+
 // document ready
 $(function(){ 
   
 
   
   // initialize iframe content
-  var contents = "bloop";
+  var contents = "Your text here...";
   $('iframe').contents().find('body').html(contents);
   
   // set iframe default font size
@@ -215,46 +217,37 @@ $(function(){
       // TODO: "Sorry, no web storage support..."
   }
    
+  // executes the command that's in the id of the button
+  $(".cmdBtn").click(function(){
+    execCmd($(this).attr('id'));
+    console.log("command button");
+  }); 
+
+  // executes the header buttons
+  $(".headerBtn").click(function(){
+    execCmdWithArg("formatBlock", $(this).attr('id'));
+  }); 
+
+  // executes a change of font
+  $(".select-font").click(function(){
+    execCmdWithArg("fontName", this.value);
+  });
+
+  // increase font size
+  $("#lg-font").click(function(){
+    var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) + 2;
+    $('iframe').contents().find('body').css("font-size", newFontSize + "px");
+  });
+
+  // decrease font size
+  $("#sm-font").click(function(){
+    var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) - 2;
+    $('iframe').contents().find('body').css("font-size", newFontSize + "px");
+
+  });
 
 
 }); // end document ready
-
-// executes the command that's in the id of the button
-$(".cmdBtn").click(function(){
-  execCmd($(this).attr('id'));
-  console.log("command button");
-}); 
-
-// executes the header buttons
-$(".headerBtn").click(function(){
-  execCmdWithArg("formatBlock", $(this).attr('id'));
-}); 
-
-// executes a change of font
-$(".select-font").click(function(){
-  execCmdWithArg("fontName", this.value);
-});
-
-// increase font size
-$("#lg-font").click(function(){
-  var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) + 2;
-  $('iframe').contents().find('body').css("font-size", newFontSize + "px");
-});
-
-// decrease font size
-$("#sm-font").click(function(){
-  var newFontSize = parseFloat(  $('iframe').contents().find('body').css("font-size").slice(0, -2)) - 2;
-  $('iframe').contents().find('body').css("font-size", newFontSize + "px");
-
-});
-
-$(".testBtn").click(function(){
-  
-  var htmlTxt = $("iframe").contents().find("html").html();
-  var txt = $("iframe").contents().find("html")[0].innerText.trim();
-  console.log("html: " + htmlTxt);
-  console.log("txt: " + txt);
-});
 
 // turns on the text editor
 function enableEditMode() {
@@ -271,6 +264,52 @@ function execCmdWithArg(command, arg){
   richTextField.document.execCommand(command, false, arg);
   console.log("Command: "+command);
 }
+
+// a function to check for repeated words in a sorted array of strings
+function beginRepeatCheck(){
+  var len = txt.length;
+  for (var i = 0; i < len; i++){
+    
+    
+    // keep count of the ith word in txt
+    var count = 0;
+    var current = i;
+    
+    // check ith word against the next word
+    count = check(current, count);
+    if (count > 1)
+      console.log(txt[i]+": " + count);
+    
+    // move up to next unique word
+    i += (count - 1);
+
+  }
+  return;
+}
+
+// returns number of duplicate strings in a sorted array
+function check(c, count){
+  if (txt[c] === txt[c+1])
+    count = check(c+1, count);
+  count++;
+  return count;  
+}
+
+
+// test button
+$(".testBtn").click(function(){
+  
+  var htmlTxt = $("iframe").contents().find("html").html();
+  var innerTxt = $("iframe").contents().find("html")[0].innerText;
+
+  
+  txt = innerTxt.toLowerCase().replace(/[^a-z'\s\d]/g, " ").replace(/\s+/g, " ").trim().split(" ");
+  
+  console.log(txt.sort());
+  beginRepeatCheck();
+  
+  
+});
 //# sourceURL=userscript.js
 </script>
 </body>
