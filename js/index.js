@@ -9,10 +9,10 @@ $(function() {
   }); // end new quill 
 
   // set initial contents
-  quill.setText("  Sample \n text is    sample!...I think...   \n");
+  quill.setText("  Sample \n text is    sample...  \n");
 
-  // test button
-  $(".testBtn").click(function() {
+  // test button to do 
+  $(".navbar-brand").click(function() {
     
     // format text and split into a sorted array
     txt = quill

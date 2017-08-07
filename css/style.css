@@ -1,39 +1,33 @@
-.formatBtn {
-  color: #303030;
-  height: 30px;
-}
-
-.btn-group {
-  margin-bottom: 5px;
-}
-
-main {
-  border: 5px solid blue;
+html,
+body,
+.full-height {
   height: 100%;
 }
-.sidebar {
-  border: 5px solid red;
-  height: 100%;
+html {
+  border: solid 3px green;
 }
+
+body {
+  border: solid 5px blue;
+}
+
+.navbar {
+  border: solid 2px purple;
+}
+
+.main-container {
+  border: solid 5px red;
+}
+
+.main-row {
+  border: solid 2px black;
+}
+
 .soc-bar {
-  border: 5px solid purple;
-  height: 100%;
+  border: solid 2px purple;
 }
 
-.richTxtBtns {
-  margin: 10px;
+.sidebar {
+  border: solid 2px purple;
 }
 
-.richTextBox {
-  height: 100%;
-  width: 100%;
-  background: #f8f1fc;
-}
-
-.fa-caret-up, .fa-caret-down {
-  font-size: 10;
-}
-
-.sm-font {
-  font-size: 11;
-}
