@@ -3,13 +3,16 @@ var txt;
 
 // on document ready
 $(function() {
+  
+  // new quill editor
   var quill = new Quill("#editor", {
     theme: "snow",
-    placeholder: "Write something..."
+    placeholder: "Write something...",
+    scrollingContainer: "main"
   }); // end new quill 
 
   // set initial contents
-  quill.setText("  Sample \n text is    sample...  \n");
+  quill.setText("Write something here...");
 
   // test button to do 
   $(".navbar-brand").click(function() {
