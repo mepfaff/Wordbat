@@ -1,10 +1,3 @@
-html {
-  border: solid 3px green;
-}
-
-body {
-  border: solid 5px blue;
-}
 
 .navbar {
   margin: 0;
@@ -22,8 +15,15 @@ body {
 .sidebar {
   border: solid 2px purple;
   height: 530px;
-  position: relative;
-  top: 0;
+  position: fixed;
+}
+
+.soc-bar{
+
+}
+
+.sidebar {
+
 }
 
 
