@@ -1,31 +1,22 @@
-
 .navbar {
   margin: 0;
+  height: 50px;
 }
 
 .main-container {
-
+  position: relative;
+  top: 50px;
 }
 
 .main-row {
-
 }
 
-.soc-bar,
-.sidebar {
+.soc-bar, .sidebar {
   border: solid 2px purple;
   height: 530px;
   position: fixed;
+  z-index: 2;
 }
-
-.soc-bar{
-
-}
-
-.sidebar {
-
-}
-
 
 .textGoesHere {
   padding: 0;
@@ -36,3 +27,14 @@
   min-height: 100px;
 }
 
+#editor.ql-container.ql-snow {
+  border: none;
+  position: relative;
+  top: 35px;
+}
+
+.ql-toolbar.ql-snow {
+  background-color: #fff;
+  z-index: 1;
+  width: 740px;
+}
