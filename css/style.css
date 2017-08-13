@@ -13,9 +13,10 @@
 
 .soc-bar, .sidebar {
   border: solid 2px purple;
-  height: 530px;
+  min-height: 530px;
   position: fixed;
   z-index: 2;
+  padding: 0;
 }
 
 .textGoesHere {
@@ -35,4 +36,15 @@
 
 .ql-toolbar.ql-snow {
   
+}
+
+.list-repeats {
+  width: 100%;
+  height: 300px;
+  border: solid 2px gray;
+  overflow-y: auto;
+}
+
+.list-repeats {
+  padding: 5px;
 }
