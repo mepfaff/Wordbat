@@ -36,21 +36,30 @@ $(function() {
     $(".repeats").empty();
   });
 
+  // toggles display of menu items
   $(".toggle").click(function() {
-    var closed = $(this).find(".fa-caret-right");
-    var open = $(this).find(".fa-caret-down");
+    var closedCaret = $(this).find(".fa-caret-right");
+    var openCaret = $(this).find(".fa-caret-down");
+    var details = $(this).next(".option-details")
     
-    if (closed.css("display") === "inline"){
-      closed.css("display","none");
-    } else
-      closed.css("display","inline");
-    
-    if (open.css("display") === "inline"){
-      open.css("display","none");
-    } else
-      open.css("display","inline");
+    setDisplay(closedCaret, "inline");
+    setDisplay(openCaret, "inline");
+    setDisplay(details, "block");
   });
 }); // end document ready function
+
+/* setDisplay(element, onDisplay)
+* Takes the element and the display property that
+* it should have while on, and toggles that display 
+* between that property and none
+*/
+var setDisplay = function(element, onDisplay){
+  if (element.css("display") === onDisplay){
+    element.css("display", "none");
+  }
+  else element.css("display", onDisplay);
+
+}
 
 // starts the process over for finding repeats
 var beginRepeatCheck = function() {
@@ -125,7 +134,7 @@ var displayRepeats = function() {
 
         // stop displaying words after max
         total++;
-        if (total > displayMax) {
+        if (total > displayMax - 1) {
           j = arrLen;
           i = 1;
         }
