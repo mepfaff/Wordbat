@@ -43,9 +43,6 @@
   height: 300px;
   border: solid 2px gray;
   overflow-y: auto;
-}
-
-.list-repeats {
   padding: 5px;
 }
 
