@@ -48,3 +48,14 @@
 .list-repeats {
   padding: 5px;
 }
+
+.menu-option {
+  padding: 5px;
+}
+
+.menu-option a,
+.menu-option a:hover,
+.menu-option a:visited {
+  text-decoration: none;
+  color: black;
+}
