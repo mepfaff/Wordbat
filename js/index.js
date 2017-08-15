@@ -1,9 +1,12 @@
 var txt, highest;
 var repeats = {};
 var displayMax = 100;
+var ignore = [];
 
 // on document ready
 $(function() {
+  // to do: have a function populate options if the user's been here before, then set those options
+
   // new quill editor
   var quill = new Quill("#editor", {
     theme: "snow",
@@ -12,36 +15,42 @@ $(function() {
   }); // end new quill
 
   // set initial contents
-  quill.setText("Write write something here...");
+  quill.setText(
+    "Harry Potter and the Sorcerer's Stone CHAPTER ONE THE BOY WHO LIVED Mr. and Mrs. Dursley, of number four, Privet Drive, were proud to say that they were perfectly normal, thank you very much. They were the last people you'd expect to be involved in anything strange or mysterious, because they just didn't hold with such nonsense. Mr. Dursley was the director of a firm called Grunnings, which made drills. He was a big, beefy man with hardly any neck, although he did have a very large mustache. Mrs. Dursley was thin and blonde and had nearly twice the usual amount of neck, which came in very useful as she spent so much of her time craning over garden fences, spying on the neighbors. The Dursleys had a small son called Dudley and in their opinion there was no finer boy anywhere. The Dursleys had everything they wanted, but they also had a secret, and their greatest fear was that somebody would discover it. They didn't think they could bear it if anyone found out about the Potters. Mrs. Potter was Mrs. Dursley's sister, but they hadn't met for several years; in fact, Mrs. Dursley pretended she didn't have a sister, because her sister and her good-for-nothing husband were as unDursleyish as it was possible to be. The Dursleys shuddered to think what the neighbors would say if the Potters arrived in the street. The Dursleys knew that the Potters had a small son, too, but they had never even seen him. This boy was another good reason for keeping the Potters away; they didn't want Dudley mixing with a child like that. When Mr. and Mrs. Dursley woke up on the dull, gray Tuesday our story starts, there was nothing about the cloudy sky outside to suggest that strange and mysterious things would soon be happening all over the country. Mr. Dursley hummed as he picked out his most boring tie for work, and Mrs. Dursley gossiped away happily as she wrestled a screaming Dudley into his high chair. None of them noticed a large, tawny owl flutter past the window. At half past eight, Mr. Dursley picked up his briefcase, pecked Mrs. Dursley on the cheek, and tried to kiss Dudley good-bye but missed, 2 because Dudley was now having a tantrum and throwing his cereal at the walls."
+  );
+
+  // populate ignore
+  populateIgnore();
 
   // test button to do
   $(".navbar-brand").click(function() {
     // format text and split into a sorted array
     txt = quill
       .getText() // gets text from quill editor
-      .toLowerCase() // replaces all that's not letters, numbers, spaces, and apostrophes with a single space
-      .replace(/[^a-z'\s\d]/g, " ") // replaces multiple spaces with a single space
+      .toLowerCase() // lower case
+      // replaces all that's not letters, numbers, spaces, and apostrophes with a single space
+      .replace(/[^a-z'\s\d]/g, " ")
+      // replaces multiple spaces with a single space
       // todo: can you change this from "one or more" to "more than one"?
       .replace(/\s+/g, " ")
       .trim() // removes space from beginning and end
       .split(" ") // splits string into array
       .sort(); // sorts the array in-place
 
-    console.log(txt);
     beginRepeatCheck();
     return;
   });
 
   $(".test-btn").click(function() {
-    $(".repeats").empty();
+    loadMostCommon();
   });
 
   // toggles display of menu items
   $(".toggle").click(function() {
     var closedCaret = $(this).find(".fa-caret-right");
     var openCaret = $(this).find(".fa-caret-down");
-    var details = $(this).next(".option-details")
-    
+    var details = $(this).next(".option-details");
+
     setDisplay(closedCaret, "inline");
     setDisplay(openCaret, "inline");
     setDisplay(details, "block");
@@ -53,13 +62,11 @@ $(function() {
 * it should have while on, and toggles that display 
 * between that property and none
 */
-var setDisplay = function(element, onDisplay){
-  if (element.css("display") === onDisplay){
+var setDisplay = function(element, onDisplay) {
+  if (element.css("display") === onDisplay) {
     element.css("display", "none");
-  }
-  else element.css("display", onDisplay);
-
-}
+  } else element.css("display", onDisplay);
+};
 
 // starts the process over for finding repeats
 var beginRepeatCheck = function() {
@@ -160,6 +167,55 @@ function display(word, count) {
   // display the word in the list of repeats
   $(".repeats").append(newWord);
 }
+
+var populateIgnore = function() {
+  // to do: check if user has ignored words saved already or "n most common" set to a number other than default
+  //
+};
+
+
+// to do have these words loaded in from txt file
+/*
+* Takes a list of newline-separated words and turns them into an array. Words with a british spelling formatted like "us,uk" will become their own array within the list.
+*/
+var loadMostCommon = function() {
+  
+  // get sample data
+  var sample = "the,be\nand\nof\n\n";
+  
+  // get how many to ignore (remove non-digits and convert to number)
+  var rank = Number($(".rank").text().replace(/[^\d]/g, ""));
+  console.log(rank);
+  
+  if (rank > 4350) rank = 4350;
+  
+  // replace newlines with spaces and split along spaces
+  var text = sample.toLowerCase().replace(/[\r\n]/g, " ").split(" ");
+  
+  // list of most common words plus UK equivalents
+  var commonWords = [];
+  // iterate through rank most common words
+  for (var i = 0; i < rank; i++) {
+    var word = text[i];
+    
+    // if a word has a comma, it has a UK equivalent
+    var commaIndex = word.indexOf(",");
+    // put this in its own array (to keep rank)
+    if (commaIndex < 0) commonWords.push(word);
+    else {
+      var arr = word.split(",");
+      commonWords.push(arr);
+    }
+  }
+  // note this doesn't work yet: figure out what to do with the array of uk words- is it even needed?
+  // put these words on the ignored list
+  var len = commonWords.length;
+  for (var i = 0; i < commonWords.length; i++){
+    ignore.push(commonWords[i]);
+  }
+  
+  console.log(commonWords);
+};
 
 // to do: on checking a checkbox next to a repeated word
 // add that word to the list of highlighted words
