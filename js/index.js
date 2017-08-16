@@ -1,4 +1,4 @@
-var txt, highest;
+var txt, highest, quill;
 var repeats = {};
 var displayMax = 100;
 var ignore = [];
@@ -8,7 +8,7 @@ $(function() {
   // to do: have a function populate options if the user's been here before, then set those options
 
   // new quill editor
-  var quill = new Quill("#editor", {
+  quill = new Quill("#editor", {
     theme: "snow",
     placeholder: "Write something...",
     scrollingContainer: "main"
@@ -42,7 +42,8 @@ $(function() {
   });
 
   $(".test-btn").click(function() {
-    loadMostCommon();
+    //loadMostCommon();
+    onEdit();
   });
 
   // toggles display of menu items
@@ -110,7 +111,7 @@ var beginRepeatCheck = function() {
 }; // end beginRepeatCheck
 
 // recursively checks sorted array for duplicates, returns duplicate count
-function check(c, count) {
+var check = function(c, count) {
   // if duplicate found, keep searching
   if (txt[c] === txt[c + 1]) count = check(c + 1, count);
   // count increases on each iteration of check (minimum 1)
@@ -118,6 +119,17 @@ function check(c, count) {
   count++;
   return count;
 }
+
+// to do when editor is changed
+var onEdit = function(){
+  
+  // update word count TODO fix this
+  var wordCount;
+  console.log(txt);
+  console.log(txt.length);
+  
+}
+
 
 // to do
 var displayRepeats = function() {
@@ -207,6 +219,8 @@ var loadMostCommon = function() {
       commonWords.push(arr);
     }
   }
+  
+
   // note this doesn't work yet: figure out what to do with the array of uk words- is it even needed?
   // put these words on the ignored list
   var len = commonWords.length;

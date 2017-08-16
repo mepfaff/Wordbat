@@ -77,6 +77,10 @@
   border: solid 1px gray;
 }
 
+.option-details p {
+  padding: 5px;
+}
+
 
 .menu-option {
   padding: 5px;
