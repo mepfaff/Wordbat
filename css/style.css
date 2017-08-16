@@ -49,9 +49,24 @@
 
 .word {
   padding: 5px;
+  font-size: 16px;
 }
 .word:hover {
   background-color: #ddd;
+}
+
+.ignore-btn {
+  color: #fff;
+  text-decoration: none;
+  font-size: 17px;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  width: 15px;
+}
+
+.ignore-btn:hover{
+  color: darkgray;
 }
 
 .thesaurus-details,

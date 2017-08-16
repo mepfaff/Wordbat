@@ -162,7 +162,7 @@ function display(word, count) {
     word +
     ": " +
     count +
-    "</label></div>";
+    '</label><a href="#"><i class="fa fa-times-circle ignore-btn" aria-hidden="true"></i></a></div>';
 
   // display the word in the list of repeats
   $(".repeats").append(newWord);
