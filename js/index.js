@@ -25,17 +25,7 @@ $(function() {
   // test button to do
   $(".navbar-brand").click(function() {
     // format text and split into a sorted array
-    txt = quill
-      .getText() // gets text from quill editor
-      .toLowerCase() // lower case
-      // replaces all that's not letters, numbers, spaces, and apostrophes with a single space
-      .replace(/[^a-z'\s\d]/g, " ")
-      // replaces multiple spaces with a single space
-      // todo: can you change this from "one or more" to "more than one"?
-      .replace(/\s+/g, " ")
-      .trim() // removes space from beginning and end
-      .split(" ") // splits string into array
-      .sort(); // sorts the array in-place
+    getTxt();
 
     beginRepeatCheck();
     return;
@@ -57,6 +47,24 @@ $(function() {
     setDisplay(details, "block");
   });
 }); // end document ready function
+
+
+getTxt = function(){
+	txt = quill
+      .getText() // gets text from quill editor
+      .toLowerCase() // lower case
+      // replaces all that's not letters, numbers, spaces, and apostrophes with a single space
+      .replace(/[^a-z'-\s\d]/g, " ")
+      // replaces double hypens and hyphens with spaces on either side and ' with spaces on either side with a space
+      .replace(/-{2,}|-(?=\s)|\s-|\s'+\s/g, " ")
+      // replaces 2 or more spaces with a single space
+      .replace(/\s{2,}/g, " ")
+      .trim() // removes space from beginning and end
+      .split(" ") // splits string into array
+      .sort(); // sorts the array in-place
+}
+ 
+
 
 /* setDisplay(element, onDisplay)
 * Takes the element and the display property that
@@ -124,9 +132,15 @@ var check = function(c, count) {
 var onEdit = function(){
   
   // update word count TODO fix this
-  var wordCount;
   console.log(txt);
-  console.log(txt.length);
+  $(".count").text(txt.length);
+  
+  var text = quill.getText();
+  $(".chars").text(text.replace(/\s/g,"").split("").length);  
+  $(".chars-with-spaces").text(text.split("").length - 1);
+  
+  
+  
   
 }
 
