@@ -26,6 +26,7 @@ $(function() {
   $(".navbar-brand").click(function() {
     // format text and split into a sorted array
     getTxt();
+    onEdit();
 
     beginRepeatCheck();
     return;
@@ -33,7 +34,7 @@ $(function() {
 
   $(".test-btn").click(function() {
     //loadMostCommon();
-    onEdit();
+   
   });
 
   // toggles display of menu items
@@ -147,6 +148,10 @@ var onEdit = function(){
 
 // to do
 var displayRepeats = function() {
+  
+  // destroy tooltips
+  $('[data-toggle="tooltip"]').tooltip("destroy");
+  
   // clear box
   $(".repeats").empty();
 
@@ -174,8 +179,12 @@ var displayRepeats = function() {
       } // end j for loop
     } // end if hasownproperty
   } // end i for loop
+  
+  // turn on tooltips
+  $('[data-toggle="tooltip"]').tooltip({container: "body"});
+  
   return;
-}; // end retrieveRepeats
+}; // end displayRepeats
 
 // display the repeats
 function display(word, count) {
@@ -188,7 +197,7 @@ function display(word, count) {
     word +
     ": " +
     count +
-    '</label><a href="#"><i class="fa fa-times-circle ignore-btn" aria-hidden="true"></i></a></div>';
+    '</label><a href="#"><i class="fa fa-times-circle ignore-btn" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Ignore"></i></a></div>';
 
   // display the word in the list of repeats
   $(".repeats").append(newWord);
@@ -244,6 +253,8 @@ var loadMostCommon = function() {
   
   console.log(commonWords);
 };
+
+
 
 // to do: on checking a checkbox next to a repeated word
 // add that word to the list of highlighted words
