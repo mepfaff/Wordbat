@@ -2,6 +2,7 @@ var txt, highest, quill;
 var repeats = {};
 var displayMax = 100;
 var ignore = [];
+var common = [];
 
 // on document ready
 $(function() {
@@ -33,7 +34,7 @@ $(function() {
   });
 
   $(".test-btn").click(function() {
-    //loadMostCommon();
+    loadMostCommon();
     
    // quill.setContents([
     //  {insert: "hello", {background: '#abc' }}
@@ -46,7 +47,7 @@ $(function() {
  
     
     
-    console.log(t);
+   // console.log(t);
    
   });
 
@@ -91,6 +92,7 @@ var setDisplay = function(element, onDisplay) {
   } else element.css("display", onDisplay);
 };
 
+
 // starts the process over for finding repeats
 var beginRepeatCheck = function() {
   repeats = {};
@@ -128,8 +130,20 @@ var beginRepeatCheck = function() {
     // move up to the next unique word
     i += count - 1;
   } // end for loop
+  
+  // check how many words to ignore
+    // to do: check load most common (if common === undefined then load most common, etc)
+  
+  // get how many most common to ignore (remove non-digits and convert to number)
+  var rank = Number($(".rank").text().replace(/[^\d]/g, ""));
+   
+  // set maximum rank
+  if (rank > 4350) rank = 4350;
 
-  displayRepeats();
+  console.log(rank);
+  
+  
+  displayRepeats(rank);
 }; // end beginRepeatCheck
 
 // recursively checks sorted array for duplicates, returns duplicate count
@@ -147,20 +161,21 @@ var onEdit = function(){
   
   // update word count TODO fix this
   console.log(txt);
-  $(".count").text(txt.length);
-  
-  var text = quill.getText();
-  $(".chars").text(text.replace(/\s/g,"").split("").length);  
-  $(".chars-with-spaces").text(text.split("").length - 1);
-  
-  
-  
+  updateWordCount();
   
 }
 
 
-// to do
-var displayRepeats = function() {
+// gets word count and updates display
+var updateWordCount = function(){
+  $(".count").text(txt.length); 
+  var text = quill.getText();
+  $(".chars").text(text.replace(/\s/g,"").split("").length);  
+  $(".chars-with-spaces").text(text.split("").length - 1); 
+}
+
+// displays repeats in the results box
+var displayRepeats = function(rank) {
   
   // destroy tooltips
   $('[data-toggle="tooltip"]').tooltip("destroy");
@@ -181,6 +196,9 @@ var displayRepeats = function() {
       // list all words in that array
       var arrLen = wordArr.length;
       for (var j = 0; j < arrLen; j++) {
+        
+        // check if word should be ignored
+        if (checkMostCommon(wordArr[j], rank) && checkIgnored(wordArr[j]))
         display(wordArr[j], i);
 
         // stop displaying words after max
@@ -199,7 +217,7 @@ var displayRepeats = function() {
   return;
 }; // end displayRepeats
 
-// display the repeats
+// display the words
 function display(word, count) {
   // to do: get from the page how many results to display
 
@@ -229,43 +247,63 @@ var populateIgnore = function() {
 var loadMostCommon = function() {
   
   // get sample data
-  var sample = "the,be\nand\nof\n\n";
+  common = [];
+  var sample = "brown,fox\nthe\ndog";
   
-  // get how many to ignore (remove non-digits and convert to number)
-  var rank = Number($(".rank").text().replace(/[^\d]/g, ""));
-  console.log(rank);
-  
-  if (rank > 4350) rank = 4350;
-  
-  // replace newlines with spaces and split along spaces
-  var text = sample.toLowerCase().replace(/[\r\n]/g, " ").split(" ");
-  
-  // list of most common words plus UK equivalents
-  var commonWords = [];
-  // iterate through rank most common words
-  for (var i = 0; i < rank; i++) {
-    var word = text[i];
+  // replace newlines and 2+ spaces with single space and split along spaces
+  // to do: store this info permanently and remove this step
+  var arr = sample.toLowerCase().replace(/[\r\n]/g, " ").replace(/\s{2,}/g, " ").split(" ");
     
-    // if a word has a comma, it has a UK equivalent
-    var commaIndex = word.indexOf(",");
-    // put this in its own array (to keep rank)
-    if (commaIndex < 0) commonWords.push(word);
-    else {
-      var arr = word.split(",");
-      commonWords.push(arr);
-    }
-  }
+  // iterate through most common words
+  var len = arr.length;
+  for (var i = 0; i < len; i++) {
+    var word = arr[i];
+    
+    // check if UK equiv
+    if (word.indexOf(",") >= 0){
+      
+      console.log("Before: "+word);
+      var tmpArr = word.split(",");
+      console.log("After: "+tmpArr);
+      common.push(tmpArr);
+      
+    } else common.push(arr[i]);
+  } // end i for loop
   
+  console.log(common);
 
-  // note this doesn't work yet: figure out what to do with the array of uk words- is it even needed?
-  // put these words on the ignored list
-  var len = commonWords.length;
-  for (var i = 0; i < commonWords.length; i++){
-    ignore.push(commonWords[i]);
-  }
+} // end loadMostCommon
+
+// check against most common words
+var checkMostCommon = function(word, rank){
   
-  console.log(commonWords);
-};
+  // iterate through rank most common words
+  for (var i = 0; i < rank; i++){
+    
+    var commonWord = common[i];
+   
+    // check if there's a UK equivalent
+    if (Array.isArray(commonWord)){
+      
+      // check the word against US and UK variants
+      for (var j = 0; j < commonWord.length; j++){
+        if (word === commonWord[j])
+          return false;
+      }  
+      // check if word is in n most common
+    } else if (word === commonWord)
+      return false;
+  }
+  return true;
+}  
+
+var checkIgnored = function(word){
+  // to do
+  return true;
+}
+
+
+  
 
 
 
