@@ -63,7 +63,10 @@ $(function() {
   });
 }); // end document ready function
 
-
+/*
+* Grabs text, removes misc punctuation,
+* and puts words into a sorted array. 
+*/
 var getTxt = function(){
 	txt = quill
       .getText() // gets text from quill editor
