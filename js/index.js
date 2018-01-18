@@ -64,7 +64,7 @@ $(function() {
 }); // end document ready function
 
 
-getTxt = function(){
+var getTxt = function(){
 	txt = quill
       .getText() // gets text from quill editor
       .toLowerCase() // lower case
@@ -77,7 +77,7 @@ getTxt = function(){
       .trim() // removes space from beginning and end
       .split(" ") // splits string into array
       .sort(); // sorts the array in-place
-}
+};
  
 
 
