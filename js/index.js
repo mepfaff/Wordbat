@@ -163,7 +163,7 @@ var onEdit = function(){
   console.log(txt);
   updateWordCount();
   
-}
+};
 
 
 // gets word count and updates display
@@ -172,7 +172,7 @@ var updateWordCount = function(){
   var text = quill.getText();
   $(".chars").text(text.replace(/\s/g,"").split("").length);  
   $(".chars-with-spaces").text(text.split("").length - 1); 
-}
+};
 
 // displays repeats in the results box
 var displayRepeats = function(rank) {
@@ -272,7 +272,7 @@ var loadMostCommon = function() {
   
   console.log(common);
 
-} // end loadMostCommon
+}; // end loadMostCommon
 
 // check against most common words
 var checkMostCommon = function(word, rank){
@@ -295,12 +295,12 @@ var checkMostCommon = function(word, rank){
       return false;
   }
   return true;
-}  
+};  
 
 var checkIgnored = function(word){
   // to do
   return true;
-}
+};
 
 
   
